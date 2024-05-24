@@ -4,6 +4,7 @@
 #![allow(clippy::all)]
 
 use diesel::{deserialize::Queryable, prelude::Insertable, Selectable};
+use rocket::serde::json::Json;
 use serde::{Deserialize, Serialize};
 
 use crate::schema::{posts, users};
@@ -23,6 +24,26 @@ pub struct Post {
 pub struct User {
     pub id: i32,
     pub nickname: String,
-    pub password: String,
+    #[serde(skip_serializing)]
+    password: String,
 }
 
+impl User {
+    pub fn new(id: i32, nickname: &String, password: &String) -> Self {
+        User {
+            id,
+            nickname: nickname.clone(),
+            password: password.clone()
+        }
+    }
+}
+
+impl From<Json<User>> for User {
+    fn from(value: Json<User>) -> Self {
+        User {
+            id: value.id,
+            nickname: value.nickname.clone(),
+            password: value.password.clone()
+        }
+    }
+}
