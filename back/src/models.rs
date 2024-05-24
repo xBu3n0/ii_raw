@@ -25,4 +25,3 @@ pub struct User {
     pub nickname: String,
     pub password: String,
 }
-
