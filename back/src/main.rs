@@ -1,4 +1,3 @@
-//test
 use diesel::{insert_into, ExpressionMethods, QueryDsl, RunQueryDsl, SelectableHelper};
 use ii_raw::{
     establish_connection,
